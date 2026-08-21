@@ -1,2 +1,11 @@
-import Home from "./pages/Home";
-export default function App() { return <Home />; }
+import './App.css'
+
+function App() {
+  return (
+    <div>
+      <h1>CidaLink</h1>
+    </div>
+  )
+}
+
+export default App
