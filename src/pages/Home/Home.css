@@ -1,0 +1,111 @@
+.hero {
+  padding: 24px 0 0;
+}
+
+.heropic {
+  position: relative;
+  overflow: hidden;
+  border-radius: 28px;
+  box-shadow: var(--sombra);
+  min-height: 600px;
+  background: #e9e9e4;
+}
+
+.heropic > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-scrim {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    100deg,
+    rgba(var(--scrim), 0.92) 0%,
+    rgba(var(--scrim), 0.65) 28%,
+    rgba(var(--scrim), 0.1) 52%,
+    rgba(var(--scrim), 0) 66%
+  );
+}
+
+.balao-chat {
+  position: absolute;
+  z-index: 2;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: var(--sombra);
+  padding: 10px 14px;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  max-width: 260px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.balao-chat img {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.balao-chat .nome {
+  font-weight: 700;
+  color: var(--azul);
+  font-size: 0.8rem;
+}
+
+.balao1 {
+  top: 2.3rem;
+  left: 2.5rem;
+}
+
+.balao2 {
+  top: 9rem;
+  left: 18rem;
+}
+
+.balao2 .nome {
+  color: var(--verdeh);
+}
+
+.balao-inv {
+  flex-direction: row-reverse;
+  text-align: right;
+}
+
+.hero-content{
+  position: absolute;
+  z-index: 2;
+  left: 48px;
+  bottom: 32px;
+  max-width: 540px;
+}
+
+.hero-content h1{
+  font-size: 3rem;
+  line-height: 1.08;
+  margin-bottom: 18px;
+}
+
+.hero-content p{
+  font-size: 1.05rem;
+  color: var(--texto-suave);
+  max-width: 420px;
+  font-weight: 600;
+}
+
+.herobtn{
+  position: absolute;
+  z-index: 2;
+  right: 32px;
+  bottom: 32px;
+  display: flex;
+  gap: 14px;
+}

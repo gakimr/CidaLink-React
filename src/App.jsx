@@ -1,9 +1,12 @@
+import Header from './components/Header/Header'
+import Home from './pages/Home/Home'
 import './App.css'
 
 function App() {
   return (
     <div>
-      <h1>CidaLink</h1>
+      <Header />
+      <Home />
     </div>
   )
 }
