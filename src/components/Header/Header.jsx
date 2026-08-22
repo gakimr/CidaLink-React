@@ -1,5 +1,5 @@
 import './Header.css'
-import logoCidalink from '../../assets/LogotipoCida.svg'
+import logoCidalink from '../../assets/LogoCida.svg'
 import AcessibilityMenu from '../AcessibilityMenu/AcessibilityMenu'
 
 export default function Header(){
