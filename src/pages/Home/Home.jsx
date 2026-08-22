@@ -24,6 +24,50 @@ const OCORRENCIAS = [
   },
 ];
 
+const POSTS = [
+  {
+    id: 1,
+    nome: "Rihanna Oliveira",
+    local: "Centro · Rua General Osório",
+    tag: "⚠ Buraco na Rua",
+    avatar: "/rihanna.jpg",
+    foto: "/ocorrencia2.jpeg",
+    descricao:
+      "Buraco na rua atrapalhando o trânsito, precisa de reparo urgente.",
+  },
+  {
+    id: 2,
+    nome: "Zayn Macedo",
+    local: "Centro · Rua Prudente de Morais",
+    tag: "💡 Iluminação Pública",
+    avatar: "/zayn.jpg",
+    foto: "/ocorrencia1.jpeg",
+    descricao: "Poste caído, risco para os moradores da rua à noite.",
+  },
+  {
+    id: 3,
+    nome: "Katia Pereira",
+    local: "Vila Negri · Rua das Acácias",
+    tag: "🗑 Acúmulo de Lixo",
+    avatar: "/katia.jpg",
+    foto: "/ocorrencia3.jpeg",
+    descricao: "Lixo acumulado na esquina há mais de uma semana.",
+  },
+];
+
+const RECURSOS = [
+  {
+    icone: '📍',
+    titulo: 'Geolocalização Inteligente',
+    texto: 'Mapeamento preciso de cada ocorrência para facilitar o trabalho das equipes de campo na rua.',
+  },
+  {
+    icone: '📱',
+    titulo: 'Tudo na Palma da Mão',
+    texto: 'Acesse de qualquer lugar, pelo celular ou computador, com o controle das demandas urbanas sempre atualizado.',
+  },
+];
+
 export default function Home() {
   const [ativa, setAtiva] = useState(1);
 
@@ -140,6 +184,109 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <section className="secao-comunidade-wrap">
+        <div className="container">
+          <div className="secao-comunidade">
+            <div className="comunidade-titulo">
+              <h2>A comunidade em ação</h2>
+              <p>
+                Conecte-se com as demandas reais postadas pelos cidadãos e apoie
+                as solicitações da sua região.
+              </p>
+            </div>
+
+            <div className="feed">
+              {POSTS.map((post) => (
+                <div className="post" key={post.id}>
+                  <div className="post-cabecalho">
+                    <img src={post.avatar} alt="" />
+                    <div>
+                      <div className="post-nome">{post.nome}</div>
+                      <div className="post-local">{post.local}</div>
+                    </div>
+                  </div>
+                  <span className="post-tag">{post.tag}</span>
+                  <img className="post-foto" src={post.foto} alt="" />
+                  <div className="post-corpo">{post.descricao}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="secao-ocorrencia">
+        <div className="container ocorrencia-grid">
+          <div className="form-card">
+            <label htmlFor="categoria">Categoria</label>
+            <select id="categoria">
+              <option value="">Selecione o tipo</option>
+              <option value="buraco">Buraco na Rua</option>
+              <option value="iluminacao">Iluminação Pública</option>
+              <option value="lixo">Acúmulo de Lixo</option>
+              <option value="saneamento">Problemas de Saneamento</option>
+              <option value="outro">Outro</option>
+            </select>
+
+            <label htmlFor="descricao">Descrição</label>
+            <textarea
+              id="descricao"
+              placeholder="Descreva o problema e informe pontos de referência (ex: próximo à praça central, buraco profundo na via)..."
+            />
+
+            <button type="button" className="btn btn-primario btn-full">
+              Registrar Ocorrência
+            </button>
+          </div>
+
+          <div className="ocorrencia-info">
+            <h2>Contribua com a melhoria do seu bairro</h2>
+
+            <ul className="passo-lista">
+              <li>
+                <span className="passo-numero">1</span>
+                <div>
+                  <strong>Selecione a categoria</strong>
+                  <p>Escolha o tipo de problema que você quer reportar.</p>
+                </div>
+              </li>
+              <li>
+                <span className="passo-numero">2</span>
+                <div>
+                  <strong>Descreva o ocorrido</strong>
+                  <p>Informe detalhes e pontos de referência do local.</p>
+                </div>
+              </li>
+              <li>
+                <span className="passo-numero">3</span>
+                <div>
+                  <strong>Acompanhe em tempo real</strong>
+                  <p>Veja o status mudar de pendente para resolvido.</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+               <h2 className="sec-titulo">Soluções tecnológicas para um município conectado</h2>
+      <section className="secao-recursos">
+  <div className="container">
+    <div className="recursos-titulo">
+      <p>Da precisão do mapa à tomada de decisões: descubra o que move a eficiência do CidaLink.</p>
+    </div>
+
+    <div className="recursos-grid">
+      {RECURSOS.map((r) => (
+        <div className="recurso-card" key={r.titulo}>
+          <div className="recurso-icone">{r.icone}</div>
+          <h3>{r.titulo}</h3>
+          <p>{r.texto}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
     </>
   );
 }
