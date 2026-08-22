@@ -77,3 +77,36 @@ html.filtro-tritanopia{ filter: url(#tritanopia); }
 html.filtro-tritanomalia{ filter: url(#tritanomalia); }
 html.filtro-acromatopsia{ filter: grayscale(1) contrast(1.1); }
 
+.btn{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 26px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border: none;
+  cursor: pointer;
+  transition: transform .15s ease;
+}
+.btn:hover{ transform: translateY(-4px); }
+
+.btn-primario{
+  background: var(--verdeh);
+  color: var(--cinzabranco);
+  box-shadow: 0 6px 16px rgba(62,142,91,0.35);
+}
+
+.btn-primario:hover{
+  background: var(--verde)
+}
+
+.btn-secundario{
+  background: var(--azul);
+  color: var(--cinzabranco);
+  box-shadow: 0 6px 16px rgba(22,38,74,0.3);
+}
+
+.btn-secundario:hover{
+  background: var(--azulc)
+}
