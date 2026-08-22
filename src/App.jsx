@@ -1,9 +1,10 @@
+import Header from './components/Header/Header'
 import './App.css'
 
 function App() {
   return (
     <div>
-      <h1>CidaLink</h1>
+      <Header />
     </div>
   )
 }
