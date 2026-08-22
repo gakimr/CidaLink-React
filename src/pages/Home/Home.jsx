@@ -24,6 +24,37 @@ const OCORRENCIAS = [
   },
 ];
 
+const POSTS = [
+  {
+    id: 1,
+    nome: "Rihanna Oliveira",
+    local: "Centro · Rua General Osório",
+    tag: "⚠ Buraco na Rua",
+    avatar: "/rihanna.jpg",
+    foto: "/ocorrencia2.jpeg",
+    descricao:
+      "Buraco na rua atrapalhando o trânsito, precisa de reparo urgente.",
+  },
+  {
+    id: 2,
+    nome: "Zayn Macedo",
+    local: "Centro · Rua Prudente de Morais",
+    tag: "💡 Iluminação Pública",
+    avatar: "/zayn.jpg",
+    foto: "/ocorrencia1.jpeg",
+    descricao: "Poste caído, risco para os moradores da rua à noite.",
+  },
+  {
+    id: 3,
+    nome: "Katia Pereira",
+    local: "Vila Negri · Rua das Acácias",
+    tag: "🗑 Acúmulo de Lixo",
+    avatar: "/katia.jpg",
+    foto: "/ocorrencia3.jpeg",
+    descricao: "Lixo acumulado na esquina há mais de uma semana.",
+  },
+];
+
 export default function Home() {
   const [ativa, setAtiva] = useState(1);
 
@@ -137,6 +168,37 @@ export default function Home() {
               Navegue pelo mapa, acompanhe chamados abertos, em andamento e
               resolvidos.
             </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="secao-comunidade-wrap">
+        <div className="container">
+          <div className="secao-comunidade">
+            <div className="comunidade-titulo">
+              <h2>A comunidade em ação</h2>
+              <p>
+                Conecte-se com as demandas reais postadas pelos cidadãos e apoie
+                as solicitações da sua região.
+              </p>
+            </div>
+
+            <div className="feed">
+              {POSTS.map((post) => (
+                <div className="post" key={post.id}>
+                  <div className="post-cabecalho">
+                    <img src={post.avatar} alt="" />
+                    <div>
+                      <div className="post-nome">{post.nome}</div>
+                      <div className="post-local">{post.local}</div>
+                    </div>
+                  </div>
+                  <span className="post-tag">{post.tag}</span>
+                  <img className="post-foto" src={post.foto} alt="" />
+                  <div className="post-corpo">{post.descricao}</div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
