@@ -109,3 +109,116 @@
   display: flex;
   gap: 14px;
 }
+
+.secao-mapa{
+  padding: 160px 0;
+}
+
+.mapa-grid{
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 40px;
+  align-items: center;
+}
+
+.mapa-imagem{
+  position: relative;
+}
+
+.mapa-imagem img{
+  width: 100%;
+  display: block;
+}
+
+.mapa-texto h2{
+  font-size: 2rem;
+  margin-bottom: 2.25rem;
+}
+
+.mapa-texto p{
+  color: var(--texto-suave);
+  font-size: 1.15rem;
+}
+
+.marcador{
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 3px solid #fff;
+  box-shadow: var(--sombra);
+  cursor: pointer;
+  transform: translate(-50%, -50%);
+  transition: transform .15s ease;
+}
+.marcador:hover{ transform: translate(-50%, -50%) scale(1.15); }
+.marcador-ativo{ transform: translate(-50%, -50%) scale(1.15); }
+
+.marcador-resolvido{ background: var(--verde); }
+.marcador-andamento{ background: var(--amarelo); }
+
+.mapa-card{
+  position: absolute;
+  transform: translate(-10%, -110%);
+  width: 170px;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: var(--sombra);
+  overflow: hidden;
+  z-index: 3;
+}
+
+.mapa-card img{
+  width: 100%;
+  height: 70px;
+  object-fit: cover;
+}
+
+.mapa-cardfechar{
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  background: rgba(255,255,255,0.85);
+  border: none;
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  z-index: 4;
+}
+
+.mapa-cardcorpo{
+  padding: 10px 12px;
+}
+
+.mapa-cardbairro{
+  display: block;
+  color: var(--azul);
+  font-size: 0.8rem;
+  margin-bottom: 2px;
+}
+
+.mapa-cardtipo{
+  display: block;
+  font-size: 0.68rem;
+  color: var(--texto-suave);
+  margin-bottom: 6px;
+}
+
+.mapa-cardcorpo p{
+  font-size: 0.72rem;
+  color: var(--texto-suave);
+  margin-bottom: 10px;
+}
+
+.mapaframe{
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: var(--sombra);
+}
+
+.mapaframe img{
+  width: 100%;
+  display: block;
+}

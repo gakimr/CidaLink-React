@@ -110,3 +110,13 @@ html.filtro-acromatopsia{ filter: grayscale(1) contrast(1.1); }
 .btn-secundario:hover{
   background: var(--azulc)
 }
+.status-tag{
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 999px;
+  color: #fff;
+}
+.status-resolvido{ background: var(--verde); }
+.status-andamento{ background: var(--amarelo); }
