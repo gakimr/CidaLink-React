@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from 'react-router-dom';
 import "./Home.css";
 
 const OCORRENCIAS = [
@@ -115,17 +116,17 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="herobtn">
-              <a href="#" className="btn btn-primario">
-                Sou Cidadão
-              </a>
+<div className="herobtn">
+  <Link to="/login" className="btn btn-primario">
+    Sou Cidadão
+  </Link>
 
-              <a href="#" className="btn btn-secundario">
-                Sou Administrador
-              </a>
+  <Link to="/loginadm" className="btn btn-secundario">
+    Sou Administrador
+  </Link>
+</div>
             </div>
           </div>
-        </div>
       </section>
 
       <section className="secao-mapa">
