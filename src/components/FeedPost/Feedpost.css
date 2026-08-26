@@ -1,0 +1,95 @@
+.feed-post{
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-elevado);
+  border: 1px solid var(--borda);
+  border-radius: 16px;
+  padding: 20px;
+}
+
+.feed-cabecalho{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  background: var(--bg-elevado);
+  position: relative;
+  z-index: 1;
+}
+
+.feed-info{
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.feed-avatar{
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.feed-autor{
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--texto);
+}
+
+.feed-local{
+  font-size: 0.78rem;
+  color: var(--texto-suave);
+}
+
+.feed-categoria{
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--azul);
+  margin-bottom: 4px;
+}
+
+.feed-descricao{
+  font-size: 0.9rem;
+  color: var(--texto);
+  margin-bottom: 14px;
+}
+
+.feed-imagem{
+  width: 100%;
+  max-height: 420px;
+  object-fit: cover;
+  border-radius: 12px;
+  display: block;
+  margin-bottom: 14px;
+}
+
+.feed-acoes{
+  display: flex;
+  gap: 8px;
+  border-top: 1px solid var(--borda);
+  padding-top: 12px;
+}
+
+.feed-acao-btn{
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+  justify-content: center;
+  background: none;
+  border: none;
+  padding: 8px;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--texto-suave);
+  cursor: pointer;
+}
+
+.feed-acao-btn:hover{
+  background: var(--verdeclaro);
+  color: var(--verdeh);
+}

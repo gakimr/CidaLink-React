@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { NavLink } from "react-router-dom";
+import logoCidalink from "../../assets/LogoCida.svg";
+import logoCidalinkEscuro from "../../assets/LogoCidaDM.svg";
 import "./Sidebar.css";
 
 const ICONES = {
@@ -111,35 +113,45 @@ const ICONES = {
 };
 
 const ITENS_MENU = [
-  { id: "notificacoes", rotulo: "Notificações", badge: 9 },
-  { id: "inicio", rotulo: "Página Inicial" },
-  { id: "criar", rotulo: "Criar Ocorrência" },
-  { id: "mapa", rotulo: "Mapa" },
-  { id: "chat", rotulo: "Bate-papo" },
-  { id: "perfil", rotulo: "Meu Perfil" },
-  { id: "sair", rotulo: "Sair" },
+  { id: "notificacoes", rotulo: "Notificações", rota: "/app/notificacoes", badge: 9 },
+  { id: "inicio", rotulo: "Página Inicial", rota: "/app/" }, /* <-- Adicione a barra aqui ou tire de ambos */
+  { id: "criar", rotulo: "Criar Ocorrência", rota: "/app/criar-ocorrencia" },
+  { id: "mapa", rotulo: "Mapa", rota: "/app/mapa" },
+  { id: "chat", rotulo: "Bate-papo", rota: "/app/bate-papo" },
+  { id: "perfil", rotulo: "Meu Perfil", rota: "/app/perfil" },
 ];
-
-export default function Sidebar({ paginaAtiva = "mapa" }) {
-  const [ativo, setAtivo] = useState(paginaAtiva);
-
+export default function Sidebar() {
   return (
     <aside className="sidebar">
+      <NavLink to="/app" end className="sidebar-logo">
+        <img src={logoCidalink} alt="CidaLink" className="logo-claro" />
+        <img src={logoCidalinkEscuro} alt="CidaLink" className="logo-escuro" />
+      </NavLink>
+
       <nav className="sidebar-nav">
         {ITENS_MENU.map((item) => (
-          <button
+          <NavLink
             key={item.id}
-            type="button"
-            className={`sidebar-item ${ativo === item.id ? "sidebar-item-ativo" : ""}`}
-            onClick={() => setAtivo(item.id)}
+            to={item.rota}
+            end={item.rota === "/app"}
+            className={({ isActive }) =>
+              `sidebar-item ${isActive ? "sidebar-item-ativo" : ""}`
+            }
           >
             <span className="sidebar-item-conteudo">
               {ICONES[item.id]}
               <span>{item.rotulo}</span>
             </span>
             {item.badge && <span className="sidebar-badge">{item.badge}</span>}
-          </button>
+          </NavLink>
         ))}
+
+        <button type="button" className="sidebar-item">
+          <span className="sidebar-item-conteudo">
+            {ICONES.sair}
+            <span>Sair</span>
+          </span>
+        </button>
       </nav>
     </aside>
   );

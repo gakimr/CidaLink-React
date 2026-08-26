@@ -1,0 +1,17 @@
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+  background: var(--bg);
+}
+
+.app-envoltoria{
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.app-conteudo {
+  flex: 1;
+  padding: 40px 48px;
+}

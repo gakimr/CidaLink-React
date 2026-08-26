@@ -199,3 +199,12 @@ html.filtro-acromatopsia {
 .status-andamento {
   background: var(--amarelo);
 }
+
+.status-pendente{ background: var(--vermelho); }
+
+body.darkmode .app-titulo{
+  background: linear-gradient(90deg, var(--azul), var(--azulc));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
