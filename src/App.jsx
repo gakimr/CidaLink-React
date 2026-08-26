@@ -1,6 +1,5 @@
 import { Routes, Route } from "react-router-dom";
 import Header from "./components/Header/Header";
-import Prefooter from "./components/PreFooter/Prefooter";
 import Footer from "./components/Footer/Footer";
 import Home from "./pages/Home/Home";
 import LoginCidadao from "./pages/Login/LoginCidadao";
@@ -20,7 +19,6 @@ function App() {
         <Route path="/cadastro/cidadao" element={<CadastroCidadao />} />
         <Route path="/cadastro/administrador" element={<CadastroAdmin />} />
       </Routes>
-      <Prefooter />
       <Footer />
     </div>
   );

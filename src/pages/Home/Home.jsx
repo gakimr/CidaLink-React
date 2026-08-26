@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Link } from 'react-router-dom';
+import Prefooter from "../../components/PreFooter/Prefooter";
 import "./Home.css";
+
 
 const OCORRENCIAS = [
   {
@@ -288,6 +290,9 @@ export default function Home() {
     </div>
   </div>
 </section>
+  <Prefooter />
     </>
+    
   );
+
 }
