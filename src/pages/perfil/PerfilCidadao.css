@@ -1,0 +1,155 @@
+.pagina-perfil {
+  display: flex;
+  min-height: calc(100vh - 80px);
+}
+
+/* ===== Conteúdo principal ===== */
+.perfil-container {
+  flex: 1;
+  padding: 2rem;
+  max-width: 900px;
+}
+
+.perfil-container > h1 {
+  margin-bottom: 1.5rem;
+  color: var(--texto);
+}
+
+.card-perfil {
+  background: #fff;
+  border-radius: var(--raio);
+  box-shadow: var(--sombra);
+  padding: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.perfil-topo {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.perfil-foto-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 160px;
+  flex-shrink: 0;
+}
+
+.foto-perfil {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 0.8rem;
+}
+
+.perfil-foto-box h2 {
+  font-size: 1.1rem;
+  margin-bottom: 0.3rem;
+}
+
+.selo-ativo {
+  background: var(--verdeclaro);
+  color: var(--verdeh);
+  font-size: 0.75rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+}
+
+.perfil-dados-box {
+  flex: 1;
+  min-width: 260px;
+}
+
+.perfil-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.btnEditar {
+  background: var(--azul);
+  color: #fff;
+  border: none;
+  padding: 0.4rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.dados-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.dados-grid .inputgp input:disabled {
+  background: var(--cinzabranco);
+  color: var(--texto-suave);
+  border-color: var(--borda);
+  cursor: not-allowed;
+}
+
+/* ===== Resumo de status ===== */
+.card-status h2,
+.card-lista-ocorrencias h2 {
+  margin-bottom: 1rem;
+}
+
+.cards-status-perfil {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.status-card {
+  flex: 1;
+  min-width: 140px;
+  border-radius: var(--raio);
+  padding: 1.2rem;
+  text-align: center;
+}
+
+.status-card strong {
+  display: block;
+  font-size: 1.8rem;
+}
+
+.status-card.vermelho { background: #ffe5e5; }
+.status-card .span-vermelho { color: var(--vermelho); }
+
+.status-card.amarelo { background: #fff6df; }
+.status-card .span-amarelo { color: #b8860b; }
+
+.status-card.verde { background: var(--verdeclaro); }
+.status-card .span-verde { color: var(--verdeh); }
+
+/* ===== Lista de ocorrências ===== */
+.lista-ocorrencias {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.item-ocorrencia {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid var(--borda);
+  border-radius: 12px;
+  padding: 0.8rem 1rem;
+}
+
+.item-ocorrencia .status-tag {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  font-weight: bold;
+}
+
+.status-tag.status-pendente { background: #ffe5e5; color: var(--vermelho); }
+.status-tag.status-andamento { background: #fff6df; color: #b8860b; }
+.status-tag.status-resolvido { background: var(--verdeclaro); color: var(--verdeh); }

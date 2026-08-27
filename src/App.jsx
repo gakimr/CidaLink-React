@@ -6,6 +6,7 @@ import LoginCidadao from "./pages/Login/LoginCidadao";
 import LoginAdmin from "./pages/Login/LoginAdmin";
 import CadastroCidadao from "./pages/Login/CadastroCidadao";
 import CadastroAdmin from "./pages/Login/CadastroAdmin";
+import PerfilCidadao from './pages/perfil/PerfilCidadao';
 import AppLayout from "./layout/Applayout";
 import Mapa from "./pages/App/Mapa/Mapa";
 import Feed from "./pages/App/Feed/Feed";
@@ -33,6 +34,8 @@ function App() {
       <Route element={<AppLayout />}>
         <Route path="/app/mapa" element={<Mapa />} />
        <Route path="/app" element={<Feed />} />
+       <Route path="/app/perfil" element={<PerfilCidadao/>} />
+
       </Route>
     </Routes>
   );
