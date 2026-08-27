@@ -25,16 +25,42 @@ const POSTS = [
     votos: 5,
   },
 ];
-
+//mudança da nilce
 export default function Feed() {
   return (
-    <>
-      <h1 className="app-titulo">Feed da Comunidade</h1>
-      <div className="feed-lista">
-        {POSTS.map((post) => (
-          <FeedPost key={post.id} post={post} />
-        ))}
+    <section className="feed-pagina">
+      <div className="feed-topo">
+        <h1 className="app-titulo">Feed da Comunidade</h1>
+        <p>Acompanhe as ocorrências publicadas pelos cidadãos.</p>
       </div>
-    </>
+
+      <div className="feed-filtros">
+        <button type="button" className="feed-filtro feed-filtro-ativo">
+          Todas
+        </button>
+
+        <button type="button" className="feed-filtro">
+          Pendentes
+        </button>
+
+        <button type="button" className="feed-filtro">
+          Em andamento
+        </button>
+
+        <button type="button" className="feed-filtro">
+          Resolvidas
+        </button>
+
+        <button type="button" className="feed-criar-btn">
+          Nova ocorrência
+        </button>
+      </div>
+
+      <div className="feed-lista">
+  {POSTS.map((post) => (
+    <FeedPost key={post.id} post={post} />
+  ))}
+</div>
+    </section>
   );
 }
