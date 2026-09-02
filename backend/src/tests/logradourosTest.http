@@ -1,0 +1,38 @@
+# url ou dominio
+@URL = http://localhost
+# Porta do servidor
+@PORT = 3000
+# endpoint ou rota do teste
+@ENDPOINT = logradouros
+
+# uri - rota final do teste
+@URI = {{URL}}:{{PORT}}/{{ENDPOINT}}
+
+GET {{URI}}
+###
+GET {{URI}}/4 
+
+###
+POST {{URI}}
+Content-Type: application/json; charset=utf-8
+
+  {   "logradouro": "Rua Prudente de Morais",
+      "longitude": "-48.5085",
+      "latitude": "-21.4357",
+      "bairro_id": "1"
+    }
+
+###
+PUT {{URI}}/5
+Content-Type: application/json; charset=utf-8
+
+  {
+    "logradouro": "Rua Prudente de Morais",
+      "longitude": "-48.5085",
+      "latitude": "-21.4357",
+      "bairro_id": "1"
+    }
+
+
+###
+DELETE {{URI}}/2 

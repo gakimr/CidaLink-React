@@ -1,0 +1,32 @@
+# url ou dominio
+@URL = http://localhost
+# Porta do servidor
+@PORT = 3000
+# endpoint ou rota do teste
+@ENDPOINT = bairros
+
+# uri - rota final do teste
+@URI = {{URL}}:{{PORT}}/{{ENDPOINT}}
+
+GET {{URI}}
+###
+GET {{URI}}/4 
+
+###
+POST {{URI}}
+Content-Type: application/json; charset=utf-8
+
+  {   "bairro":"Jardim Contendas"
+    }
+
+###
+PUT {{URI}}/5
+Content-Type: application/json; charset=utf-8
+
+  {
+   "bairro":"Jardim Contendas"
+    }
+
+
+###
+DELETE {{URI}}/2 

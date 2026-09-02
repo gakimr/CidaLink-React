@@ -1,0 +1,57 @@
+# url ou dominio
+@URL = http://localhost
+# Porta do servidor
+@PORT = 3000
+# endpoint ou rota do teste
+@ENDPOINT = ocorrencias
+# uri - rota final do teste
+@URI = {{URL}}:{{PORT}}/{{ENDPOINT}}
+
+GET {{URI}}
+###
+GET {{URI}}/4 
+
+###
+POST {{URI}}
+Content-Type: application/json; charset=utf-8
+
+  {  "titulo": "Buraco",
+      "descricao": "buraco na calçada derrubando idosos",
+      "categoria": "buraco",
+      "fotoOcorrencia": "",
+      "status":"Pendente",
+      "user_id":"2",
+      "resposta_admin":"vamos consertar",
+      "nome_usuario":"Zayn Macedo",
+      "foto_usuario":"",
+      "rua":"Rua General Osorio",
+      "latitude":"-21.4095283",
+      "longitude":"-48.5044983",
+      "bairro":"centro"
+
+    }
+
+###
+PUT {{URI}}/5
+Content-Type: application/json; charset=utf-8
+
+  {
+    "titulo": "Buraco",
+      "descricao": "buraco na calçada derrubando idosos",
+      "categoria": "buraco",
+      "fotoOcorrencia": "",
+      "status":"Pendente",
+      "user_id":"2",
+      "resposta_admin":"vamos consertar",
+      "nome_usuario":"Zayn Macedo",
+      "foto_usuario":"",
+      "rua":"Rua General Osorio",
+      "latitude":"-21.4095283",
+      "longitude":"-48.5044983",
+      "bairro":"centro"
+
+    }
+
+
+###
+DELETE {{URI}}/2 
