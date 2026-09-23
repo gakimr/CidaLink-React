@@ -3,13 +3,13 @@ import SvgFiltrosDaltonismo from "./SvgFiltrosDaltonismo";
 import "./AcessibilityMenu.css";
 
 const OPCOESFILTRO = [
-  "protanopia",
-  "protanomalia",
-  "deuteranopia",
-  "deuteranomalia",
-  "tritanopia",
-  "tritanomalia",
-  "acromatopsia",
+  "Protanopia",
+  "Protanomalia",
+  "Deuteranopia",
+  "Deuteranomalia",
+  "Tritanopia",
+  "Tritanomalia",
+  "Acromatopsia",
 ];
 
 export default function AcessibilityMenu() {

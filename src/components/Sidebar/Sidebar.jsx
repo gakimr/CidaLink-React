@@ -113,8 +113,13 @@ const ICONES = {
 };
 
 const ITENS_MENU = [
-  { id: "notificacoes", rotulo: "Notificações", rota: "/app/notificacoes", badge: 9 },
-  { id: "inicio", rotulo: "Página Inicial", rota: "/app/" }, /* <-- Adicione a barra aqui ou tire de ambos */
+  {
+    id: "notificacoes",
+    rotulo: "Notificações",
+    rota: "/app/notificacoes",
+    badge: 9,
+  },
+  { id: "inicio", rotulo: "Página Inicial", rota: "/app", exata: true },
   { id: "criar", rotulo: "Criar Ocorrência", rota: "/app/criar-ocorrencia" },
   { id: "mapa", rotulo: "Mapa", rota: "/app/mapa" },
   { id: "chat", rotulo: "Bate-papo", rota: "/app/bate-papo" },
