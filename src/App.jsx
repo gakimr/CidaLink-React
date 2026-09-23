@@ -10,6 +10,7 @@ import AppLayout from "./layout/Applayout";
 import Mapa from "./pages/App/Mapa/Mapa";
 import Feed from "./pages/App/Feed/Feed";
 import CriarOcorrencia from "./pages/App/CriarOcorrencia/CriarOcorrencia";
+import Perfil from "./pages/App/Perfil/Perfil";
 import "./App.css";
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
         <Route path="/app/mapa" element={<Mapa />} />
         <Route path="/app" element={<Feed />} />
         <Route path="/app/criar-ocorrencia" element={<CriarOcorrencia />} />
+        <Route path="/app/perfil" element={<Perfil />} />
       </Route>
     </Routes>
   );
