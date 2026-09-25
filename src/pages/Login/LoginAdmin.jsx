@@ -1,14 +1,36 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import './Login.css';
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
+import "./Login.css";
 
 function LoginAdmin() {
-  const [email, setEmail] = useState('');
-  const [senha, setSenha] = useState('');
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
+  const [erro, setErro] = useState("");
+  const [carregando, setCarregando] = useState(false);
 
-  function handleSubmit(event) {
+  const { login } = useAuth();
+  const navigate = useNavigate();
+
+  async function handleSubmit(event) {
     event.preventDefault();
-    console.log('Dados do formulário (admin):', { email, senha });
+    setErro("");
+    setCarregando(true);
+
+    try {
+      const usuario = await login(email, senha);
+
+      if (usuario.tipo !== "admin") {
+        setErro("Esta conta não tem acesso de administrador.");
+        return;
+      }
+
+      navigate("/app"); // troque para a rota do painel admin quando ela existir
+    } catch (error) {
+      setErro(error.response?.data?.data || "Erro ao entrar. Tente novamente.");
+    } finally {
+      setCarregando(false);
+    }
   }
 
   return (
@@ -39,17 +61,25 @@ function LoginAdmin() {
             />
           </div>
 
+          {erro && <p className="erro-form">{erro}</p>}
+
           <div className="ptlogin">
-            <button className="btnEntrar" type="submit">Entrar</button>
+            <button className="btnEntrar" type="submit" disabled={carregando}>
+              {carregando ? "Entrando..." : "Entrar"}
+            </button>
           </div>
         </form>
 
         <div className="ptlogin">
-          <Link className="rsenha" to="/recuperar-senha">Esqueceu a senha?</Link>
+          <Link className="rsenha" to="/recuperar-senha">
+            Esqueceu a senha?
+          </Link>
         </div>
         <div className="ptlogin">
           <p>Ainda não tem uma conta?</p>
-          <Link className="btnCd" to="/cadastro/administrador">Cadastre-se</Link>
+          <Link className="btnCd" to="/cadastro/administrador">
+            Cadastre-se
+          </Link>
         </div>
       </div>
     </main>

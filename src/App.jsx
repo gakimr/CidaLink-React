@@ -11,6 +11,7 @@ import Mapa from "./pages/App/Mapa/Mapa";
 import Feed from "./pages/App/Feed/Feed";
 import CriarOcorrencia from "./pages/App/CriarOcorrencia/CriarOcorrencia";
 import Perfil from "./pages/App/Perfil/Perfil";
+import RotaProtegida from "./routes/RotaProtegida";
 import "./App.css";
 
 function App() {
@@ -32,9 +33,15 @@ function App() {
         <Route path="/cadastro/administrador" element={<CadastroAdmin />} />
       </Route>
 
-      <Route element={<AppLayout />}>
-        <Route path="/app/mapa" element={<Mapa />} />
+      <Route
+        element={
+          <RotaProtegida>
+            <AppLayout />
+          </RotaProtegida>
+        }
+      >
         <Route path="/app" element={<Feed />} />
+        <Route path="/app/mapa" element={<Mapa />} />
         <Route path="/app/criar-ocorrencia" element={<CriarOcorrencia />} />
         <Route path="/app/perfil" element={<Perfil />} />
       </Route>

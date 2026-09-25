@@ -1,4 +1,5 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 import logoCidalink from "../../assets/LogoCida.svg";
 import logoCidalinkEscuro from "../../assets/LogoCidaDM.svg";
 import "./Sidebar.css";
@@ -119,13 +120,22 @@ const ITENS_MENU = [
     rota: "/app/notificacoes",
     badge: 9,
   },
-  { id: "inicio", rotulo: "Página Inicial", rota: "/app", exata: true },
+  { id: "inicio", rotulo: "Página Inicial", rota: "/app" },
   { id: "criar", rotulo: "Criar Ocorrência", rota: "/app/criar-ocorrencia" },
   { id: "mapa", rotulo: "Mapa", rota: "/app/mapa" },
   { id: "chat", rotulo: "Bate-papo", rota: "/app/bate-papo" },
   { id: "perfil", rotulo: "Meu Perfil", rota: "/app/perfil" },
 ];
+
 export default function Sidebar() {
+  const { logout } = useAuth();
+  const navigate = useNavigate();
+
+  function handleSair() {
+    navigate("/");
+    logout();
+  }
+
   return (
     <aside className="sidebar">
       <NavLink to="/app" end className="sidebar-logo">
@@ -151,7 +161,7 @@ export default function Sidebar() {
           </NavLink>
         ))}
 
-        <button type="button" className="sidebar-item">
+        <button type="button" className="sidebar-item" onClick={handleSair}>
           <span className="sidebar-item-conteudo">
             {ICONES.sair}
             <span>Sair</span>

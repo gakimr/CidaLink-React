@@ -1,23 +1,40 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import './Login.css';
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
+import "./Login.css";
 
 function CadastroCidadao() {
-  const [nome, setNome] = useState('');
-  const [cpf, setCpf] = useState('');
-  const [email, setEmail] = useState('');
-  const [senha, setSenha] = useState('');
-  const [confirmarSenha, setConfirmarSenha] = useState('');
+  const [nome, setNome] = useState("");
+  const [cpf, setCpf] = useState("");
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
+  const [confirmarSenha, setConfirmarSenha] = useState("");
+  const [erro, setErro] = useState("");
+  const [carregando, setCarregando] = useState(false);
 
-  function handleSubmit(event) {
+  const { cadastrar } = useAuth();
+  const navigate = useNavigate();
+
+  async function handleSubmit(event) {
     event.preventDefault();
+    setErro("");
 
     if (senha !== confirmarSenha) {
-      alert('As senhas não coincidem.');
+      setErro("As senhas não coincidem.");
       return;
     }
 
-    console.log('Dados do cadastro (cidadão):', { nome, cpf, email, senha });
+    setCarregando(true);
+    try {
+      await cadastrar({ nome, cpf, email, password: senha, tipo: "cidadao" });
+      navigate("/app");
+    } catch (error) {
+      setErro(
+        error.response?.data?.data || "Erro ao cadastrar. Tente novamente.",
+      );
+    } finally {
+      setCarregando(false);
+    }
   }
 
   return (
@@ -25,7 +42,9 @@ function CadastroCidadao() {
       <h2>Cadastro Cidadão</h2>
       <form onSubmit={handleSubmit}>
         <div className="inputgp">
-          <label className="obrigatorio" htmlFor="nome">Nome Completo</label>
+          <label className="obrigatorio" htmlFor="nome">
+            Nome Completo
+          </label>
           <input
             id="nome"
             type="text"
@@ -35,7 +54,9 @@ function CadastroCidadao() {
           />
         </div>
         <div className="inputgp">
-          <label className="obrigatorio" htmlFor="cpf">CPF</label>
+          <label className="obrigatorio" htmlFor="cpf">
+            CPF
+          </label>
           <input
             id="cpf"
             type="text"
@@ -46,7 +67,9 @@ function CadastroCidadao() {
           />
         </div>
         <div className="inputgp">
-          <label className="obrigatorio" htmlFor="email">E-mail</label>
+          <label className="obrigatorio" htmlFor="email">
+            E-mail
+          </label>
           <input
             id="email"
             type="email"
@@ -77,12 +100,18 @@ function CadastroCidadao() {
           />
         </div>
 
-        <button className="btnCadastro" type="submit">Cadastrar</button>
+        {erro && <p className="erro-form">{erro}</p>}
+
+        <button className="btnCadastro" type="submit" disabled={carregando}>
+          {carregando ? "Cadastrando..." : "Cadastrar"}
+        </button>
       </form>
 
       <div className="ptlogin">
         <p>Já possui uma conta?</p>
-        <Link className="btnCd" to="/login">Login</Link>
+        <Link className="btnCd" to="/login">
+          Login
+        </Link>
       </div>
     </main>
   );
