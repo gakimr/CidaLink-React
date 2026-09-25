@@ -1,4 +1,4 @@
-const { db } = require("../databases/DatabaseContext.js");
+const { db } = require("../databases/databaseContext.js");
 
 async function GetUSerbyEmail(email) {
   try {

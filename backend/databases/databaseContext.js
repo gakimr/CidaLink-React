@@ -1,9 +1,9 @@
-const pool = require("../databases/connectionMysql.js");
+const { pool } = require("../databases/connectionMysql.js");
 
 class DatabaseContext {
   async init() {
     await pool.query("SELECT 1");
-    console.log("COnectado com sucesso ao banco");
+    console.log("Conectado com sucesso ao banco");
   }
 
   async execute(query, params) {
