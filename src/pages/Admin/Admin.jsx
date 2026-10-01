@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { API_BASE, api, usuarioAtual } from "../../services/api";
+import { ChatAdmin } from "../App/Chat";
 import "./Admin.css";
 
 const DEMO = [
@@ -150,18 +151,8 @@ export function AdminNotificacoes() {
 }
 
 export function AdminChat() {
-  const [texto,setTexto]=useState("");
-  const [mensagens,setMensagens]=useState([{
-    id:1,
-   autor:"Cidadão",
-   texto:"Olá, gostaria de saber sobre minha ocorrência."}
-  ]);
-  const enviar=(e)=>{e.preventDefault();if(!texto.trim())return;setMensagens([...mensagens,{id:Date.now(),autor:"Administração",texto:texto.trim()}]);
-  setTexto("")}; return <section className="adm-pagina"><CabecalhoPagina titulo="Bate-papo" subtitulo="Atendimento direto aos cidadãos."/>
-  <div className="adm-painel adm-chat"><div className="adm-mensagens">{mensagens.map(m=><div key={m.id} className={m.autor==="Administração"?"minha":""}>
-  <strong>{m.autor}</strong><p>{m.texto}</p></div>)}</div><form onSubmit={enviar}><input value={texto} onChange={e=>setTexto(e.target.value)} placeholder="Digite uma mensagem"/>
-  <button className="adm-botao primario">Enviar</button></form></div></section>;
-  }
+  return <ChatAdmin />;
+}
 export function AdminPerfil() {
   const usuario = usuarioAtual() || {};
 

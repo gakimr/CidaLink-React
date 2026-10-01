@@ -42,7 +42,17 @@ class DatabaseSchemaMysql {
                 logradouro_id INT,
                 FOREIGN KEY (user_id) REFERENCES users(id),
                 FOREIGN KEY (logradouro_id) REFERENCES logradouros(id)
-);`
+);`,
+
+            `CREATE TABLE IF NOT EXISTS mensagens (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                conversa_id VARCHAR(191) NOT NULL,
+                usuario_id INT NOT NULL,
+                nome VARCHAR(255) NOT NULL,
+                foto TEXT,
+                texto TEXT NOT NULL,
+                data_envio DATETIME DEFAULT CURRENT_TIMESTAMP
+            )`
         ];
 
         for (const query of queries) {

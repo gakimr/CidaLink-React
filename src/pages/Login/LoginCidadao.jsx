@@ -1,14 +1,31 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { api, salvarSessao } from '../../services/api';
 import './Login.css';
 
 function LoginCidadao() {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
+  const [mensagem, setMensagem] = useState('');
+  const [carregando, setCarregando] = useState(false);
+  const navigate = useNavigate();
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
-    console.log('Dados do formulário:', { email, senha });
+    setMensagem('');
+    setCarregando(true);
+    try {
+      const resposta = await api('/auth/login', {
+        method: 'POST',
+        body: JSON.stringify({ email, password: senha }),
+      });
+      salvarSessao(resposta.data, 'cidadao');
+      navigate('/app');
+    } catch (erro) {
+      setMensagem(`${erro.message} Verifique se o backend está ativo na porta 3000.`);
+    } finally {
+      setCarregando(false);
+    }
   }
 
   return (
@@ -40,7 +57,10 @@ function LoginCidadao() {
           </div>
 
           <div className="ptlogin">
-            <button className="btnEntrar" type="submit">Entrar</button>
+            {mensagem && <p className="login-mensagem">{mensagem}</p>}
+            <button className="btnEntrar" type="submit" disabled={carregando}>
+              {carregando ? 'Entrando...' : 'Entrar'}
+            </button>
           </div>
         </form>
 

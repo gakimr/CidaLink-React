@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { api } from '../../services/api';
 import './Login.css';
 
 function CadastroCidadao() {
@@ -8,16 +9,37 @@ function CadastroCidadao() {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [confirmarSenha, setConfirmarSenha] = useState('');
+  const [mensagem, setMensagem] = useState('');
+  const [carregando, setCarregando] = useState(false);
+  const navigate = useNavigate();
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
+    setMensagem('');
 
     if (senha !== confirmarSenha) {
-      alert('As senhas não coincidem.');
+      setMensagem('As senhas não coincidem.');
       return;
     }
 
-    console.log('Dados do cadastro (cidadão):', { nome, cpf, email, senha });
+    setCarregando(true);
+    try {
+      await api('/users/register', {
+        method: 'POST',
+        body: JSON.stringify({
+          name: nome,
+          cpf: cpf.replace(/\D/g, ''),
+          email,
+          password: senha,
+        }),
+      });
+      setMensagem('Cadastro realizado com sucesso. Redirecionando para o login...');
+      setTimeout(() => navigate('/login'), 700);
+    } catch (erro) {
+      setMensagem(erro.message);
+    } finally {
+      setCarregando(false);
+    }
   }
 
   return (
@@ -77,7 +99,10 @@ function CadastroCidadao() {
           />
         </div>
 
-        <button className="btnCadastro" type="submit">Cadastrar</button>
+        {mensagem && <p className="login-mensagem">{mensagem}</p>}
+        <button className="btnCadastro" type="submit" disabled={carregando}>
+          {carregando ? 'Cadastrando...' : 'Cadastrar'}
+        </button>
       </form>
 
       <div className="ptlogin">

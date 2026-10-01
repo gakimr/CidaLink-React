@@ -9,6 +9,16 @@
   flex-direction: column;
   gap: 20px;
 }
+
+.feed-estado {
+  margin: 24px 0;
+  color: var(--texto-suave);
+  text-align: center;
+}
+
+.feed-estado-erro {
+  color: var(--vermelho);
+}
 /*mudança da nilce*/
 .feed-topo {
   max-width: 620px;
@@ -83,6 +93,7 @@
 }
 
 .feed-criar-btn {
+  text-decoration: none;
   border: none;
   border-radius: 999px;
   padding: 10px 19px;

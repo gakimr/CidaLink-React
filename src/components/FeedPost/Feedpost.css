@@ -35,6 +35,18 @@
   border: 2px solid var(--verde);
 }
 
+.feed-avatar-placeholder {
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--verdeclaro);
+  color: var(--verdeh);
+  font-weight: 700;
+}
+
 .feed-autor {
   color: var(--texto);
   font-size: 0.9rem;

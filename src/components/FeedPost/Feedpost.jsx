@@ -9,7 +9,7 @@ const STATUS_LABEL = {
 
 export default function FeedPost({ post }) {
   const [curtido, setCurtido] = useState(false);
-  const [votos, setVotos] = useState(post.votos);
+  const [votos, setVotos] = useState(post.votos || 0);
 
   function alternarCurtida() {
     setCurtido((estadoAtual) => {
@@ -24,11 +24,13 @@ export default function FeedPost({ post }) {
   return (
     <article className="feed-post">
       <header className="feed-cabecalho">
-        <img
-          src={post.avatar}
-          alt={`Foto de ${post.autor}`}
-          className="feed-avatar"
-        />
+        {post.avatar ? (
+          <img src={post.avatar} alt={`Foto de ${post.autor}`} className="feed-avatar" />
+        ) : (
+          <div className="feed-avatar-placeholder" aria-hidden="true">
+            {post.autor.slice(0, 1).toUpperCase()}
+          </div>
+        )}
 
         <div className="feed-info">
           <span className="feed-autor">{post.autor}</span>
@@ -47,6 +49,12 @@ export default function FeedPost({ post }) {
           className="feed-imagem"
         />
       )}
+      <div className="feed-conteudo">
+        <div className="feed-detalhes">
+          <span className="feed-categoria">{post.categoria || 'Ocorrência'}</span>
+        </div>
+        <p className="feed-descricao"><strong>{post.titulo}</strong>{post.titulo && post.descricao ? ' ' : ''}{post.descricao}</p>
+      </div>
       <div className="feed-acoes">
           <button
             type="button"

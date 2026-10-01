@@ -113,7 +113,7 @@ const ICONES = {
 };
 
 const ITENS_CIDADAO = [
-  { id: "notificacoes", rotulo: "Notificações", rota: "/app/notificacoes", badge: 9 },
+  { id: "notificacoes", rotulo: "Notificações", rota: "/app/notificacoes" },
   { id: "inicio", rotulo: "Página Inicial", rota: "/app/" }, /* <-- Adicione a barra aqui ou tire de ambos */
   { id: "criar", rotulo: "Criar Ocorrência", rota: "/app/criar-ocorrencia" },
   { id: "mapa", rotulo: "Mapa", rota: "/app/mapa" },

@@ -6,6 +6,7 @@ const updateRoutes = require("./updateRoutes");
 const occurrencesRoutes = require("./occurrencesRoutes");
 const bairrosRoutes = require("./bairrosRoutes");
 const logradourosRoutes = require("./logradourosRoutes");
+const chatRoutes = require("./chatRoutes");
 
 
 
@@ -17,6 +18,7 @@ routes.use ("/profile",updateRoutes);
 routes.use (occurrencesRoutes);
 routes.use (bairrosRoutes);
 routes.use (logradourosRoutes);
+routes.use("/chat", chatRoutes);
 
 
 routes.get("/test", (req,res) => { 
