@@ -139,12 +139,24 @@
   font-weight: 600;
 }
 
-.resumo-pendente { border-top-color: var(--vermelho); }
-.resumo-pendente strong { color: var(--vermelho); }
-.resumo-andamento { border-top-color: var(--amarelo); }
-.resumo-andamento strong { color: var(--amarelo); }
-.resumo-resolvida { border-top-color: var(--verde); }
-.resumo-resolvida strong { color: var(--verde); }
+.resumo-pendente {
+  border-top-color: var(--vermelho);
+}
+.resumo-pendente strong {
+  color: var(--vermelho);
+}
+.resumo-andamento {
+  border-top-color: var(--amarelo);
+}
+.resumo-andamento strong {
+  color: var(--amarelo);
+}
+.resumo-resolvida {
+  border-top-color: var(--verde);
+}
+.resumo-resolvida strong {
+  color: var(--verde);
+}
 
 .lista-vazia {
   color: var(--texto-suave);
@@ -195,9 +207,15 @@
   flex-shrink: 0;
 }
 
-.status-pendente { background: var(--vermelho); }
-.status-andamento { background: var(--amarelo); }
-.status-resolvida { background: var(--verde); }
+.status-pendente {
+  background: var(--vermelho);
+}
+.status-andamento {
+  background: var(--amarelo);
+}
+.status-resolvida {
+  background: var(--verde);
+}
 
 .lista-item-acoes {
   display: flex;
@@ -212,9 +230,18 @@
   border-radius: 999px;
 }
 
-.status-tag-pendente { background: #fde3e3; color: var(--vermelho); }
-.status-tag-andamento { background: #fbeecb; color: var(--amarelo); }
-.status-tag-resolvida { background: var(--verdeclaro); color: var(--verdeh); }
+.status-tag-pendente {
+  background: #fde3e3;
+  color: var(--vermelho);
+}
+.status-tag-andamento {
+  background: #fbeecb;
+  color: var(--amarelo);
+}
+.status-tag-resolvida {
+  background: var(--verdeclaro);
+  color: var(--verdeh);
+}
 
 .lista-item-data {
   font-size: 0.78rem;
@@ -240,4 +267,22 @@
 .btn-icone-excluir:hover {
   background: #fde3e3;
   color: var(--vermelho);
+}
+
+.perfil-acoes {
+  display: flex;
+  gap: 10px;
+}
+
+.perfil-msg {
+  font-size: 0.85rem;
+  margin-bottom: 14px;
+}
+
+.perfil-msg-erro {
+  color: var(--vermelho);
+}
+
+.perfil-msg-ok {
+  color: var(--verde);
 }

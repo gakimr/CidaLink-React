@@ -1,10 +1,30 @@
 import { useState } from "react";
+import { useAuth } from "../../../context/AuthContext";
+import api from "../../../services/api";
 import "./Perfil.css";
 
 const OCORRENCIAS_MOCK = [
-  { id: 1, categoria: "Buraco na Rua", endereco: "Rua Sete de Setembro, 120", status: "pendente", data: "12/09/2026" },
-  { id: 2, categoria: "Iluminação Pública", endereco: "Av. João Perissinoti, 45", status: "andamento", data: "05/09/2026" },
-  { id: 3, categoria: "Acúmulo de Lixo", endereco: "Rua Prudente de Morais, 88", status: "resolvida", data: "28/08/2026" },
+  {
+    id: 1,
+    categoria: "Buraco na Rua",
+    endereco: "Rua Sete de Setembro, 120",
+    status: "pendente",
+    data: "12/09/2026",
+  },
+  {
+    id: 2,
+    categoria: "Iluminação Pública",
+    endereco: "Av. João Perissinoti, 45",
+    status: "andamento",
+    data: "05/09/2026",
+  },
+  {
+    id: 3,
+    categoria: "Acúmulo de Lixo",
+    endereco: "Rua Prudente de Morais, 88",
+    status: "resolvida",
+    data: "28/08/2026",
+  },
 ];
 
 const STATUS_LABEL = {
@@ -13,31 +33,61 @@ const STATUS_LABEL = {
   resolvida: "Resolvida",
 };
 
+function dadosIniciais(user) {
+  return {
+    nome: user.nome || "",
+    email: user.email || "",
+    latitude: user.latitude || "",
+    longitude: user.longitude || "",
+  };
+}
+
 export default function Perfil() {
+  const { user, atualizarUser } = useAuth();
+
   const [editando, setEditando] = useState(false);
-  const [dados, setDados] = useState({
-    nome: "Katia Pereira",
-    cpf: "232.424.242-42",
-    email: "katy@gmail.com",
-    bairro: "",
-    rua: "",
-    latitude: "",
-    longitude: "",
-  });
+  const [dados, setDados] = useState(() => dadosIniciais(user));
+  const [salvando, setSalvando] = useState(false);
+  const [erro, setErro] = useState("");
+  const [sucesso, setSucesso] = useState("");
   const [ocorrencias, setOcorrencias] = useState(OCORRENCIAS_MOCK);
+
+  const iniciais = user.nome
+    .split(" ")
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((parte) => parte[0].toUpperCase())
+    .join("");
 
   function handleChange(campo, valor) {
     setDados((prev) => ({ ...prev, [campo]: valor }));
   }
 
-  function handleSalvar() {
-    // TODO: enviar para a API quando o backend estiver pronto
-    console.log("Dados salvos:", dados);
+  function handleCancelar() {
+    setDados(dadosIniciais(user));
+    setErro("");
     setEditando(false);
   }
 
+  async function handleSalvar() {
+    setErro("");
+    setSucesso("");
+    setSalvando(true);
+
+    try {
+      const resposta = await api.put("/perfil", dados);
+      atualizarUser(resposta.data.data.user);
+      setEditando(false);
+      setSucesso("Dados atualizados com sucesso.");
+    } catch (error) {
+      setErro(error.response?.data?.data || "Erro ao salvar. Tente novamente.");
+    } finally {
+      setSalvando(false);
+    }
+  }
+
   function handleExcluir(id) {
-    // TODO: chamar API de exclusão quando o backend estiver pronto
+    // TODO: chamar a API quando as postagens existirem no backend
     setOcorrencias((prev) => prev.filter((o) => o.id !== id));
   }
 
@@ -52,9 +102,11 @@ export default function Perfil() {
       <div className="perfil-page">
         <div className="perfil-card">
           <div className="perfil-avatar-bloco">
-            <div className="perfil-avatar">CL</div>
-            <h2>{dados.nome}</h2>
-            <span className="perfil-badge">Cidadão Ativo</span>
+            <div className="perfil-avatar">{iniciais}</div>
+            <h2>{user.nome}</h2>
+            <span className="perfil-badge">
+              {user.tipo === "admin" ? "Administrador" : "Cidadão Ativo"}
+            </span>
           </div>
 
           <div className="perfil-divisor" />
@@ -62,14 +114,33 @@ export default function Perfil() {
           <div className="perfil-dados">
             <div className="perfil-dados-topo">
               <h3>Dados Cadastrais</h3>
-              <button
-                type="button"
-                className="btn btn-primario"
-                onClick={() => (editando ? handleSalvar() : setEditando(true))}
-              >
-                {editando ? "Salvar" : "Editar"}
-              </button>
+
+              <div className="perfil-acoes">
+                {editando && (
+                  <button
+                    type="button"
+                    className="btn btn-secundario"
+                    onClick={handleCancelar}
+                    disabled={salvando}
+                  >
+                    Cancelar
+                  </button>
+                )}
+                <button
+                  type="button"
+                  className="btn btn-primario"
+                  disabled={salvando}
+                  onClick={() =>
+                    editando ? handleSalvar() : setEditando(true)
+                  }
+                >
+                  {salvando ? "Salvando..." : editando ? "Salvar" : "Editar"}
+                </button>
+              </div>
             </div>
+
+            {erro && <p className="perfil-msg perfil-msg-erro">{erro}</p>}
+            {sucesso && <p className="perfil-msg perfil-msg-ok">{sucesso}</p>}
 
             <div className="perfil-grid">
               <div className="perfil-campo">
@@ -85,7 +156,7 @@ export default function Perfil() {
 
               <div className="perfil-campo">
                 <label htmlFor="cpf">CPF</label>
-                <input id="cpf" type="text" value={dados.cpf} disabled />
+                <input id="cpf" type="text" value={user.cpf || ""} disabled />
               </div>
 
               <div className="perfil-campo">
@@ -96,28 +167,6 @@ export default function Perfil() {
                   value={dados.email}
                   disabled={!editando}
                   onChange={(e) => handleChange("email", e.target.value)}
-                />
-              </div>
-
-              <div className="perfil-campo">
-                <label htmlFor="bairro">Bairro</label>
-                <input
-                  id="bairro"
-                  type="text"
-                  value={dados.bairro}
-                  disabled={!editando}
-                  onChange={(e) => handleChange("bairro", e.target.value)}
-                />
-              </div>
-
-              <div className="perfil-campo">
-                <label htmlFor="rua">Rua</label>
-                <input
-                  id="rua"
-                  type="text"
-                  value={dados.rua}
-                  disabled={!editando}
-                  onChange={(e) => handleChange("rua", e.target.value)}
                 />
               </div>
 
@@ -168,7 +217,9 @@ export default function Perfil() {
           <h3>Minhas Ocorrências Reportadas</h3>
 
           {ocorrencias.length === 0 && (
-            <p className="lista-vazia">Você ainda não reportou nenhuma ocorrência.</p>
+            <p className="lista-vazia">
+              Você ainda não reportou nenhuma ocorrência.
+            </p>
           )}
 
           <ul className="lista-ocorrencias">
@@ -189,7 +240,11 @@ export default function Perfil() {
                   <span className="lista-item-data">{o.data}</span>
                   {o.status === "pendente" && (
                     <>
-                      <button type="button" className="btn-icone" title="Editar">
+                      <button
+                        type="button"
+                        className="btn-icone"
+                        title="Editar"
+                      >
                         ✎
                       </button>
                       <button

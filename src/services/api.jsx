@@ -15,10 +15,13 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 401) {
+    const url = error.config?.url || "";
+    const ehAuth = url.includes("/login") || url.includes("/cadastro");
+
+    if (error.response?.status === 401 && !ehAuth) {
       localStorage.removeItem("token");
       localStorage.removeItem("user");
-      window.location.href = "/";
+      window.location.href = "/login";
     }
     return Promise.reject(error);
   },

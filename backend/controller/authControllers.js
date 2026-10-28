@@ -16,6 +16,20 @@ function gerarToken(user) {
   );
 }
 
+function formatarUser(user) {
+  return {
+    id: user.id,
+    nome: user.nome,
+    email: user.email,
+    tipo: user.tipo,
+    cpf: user.cpf,
+    bairroId: user.bairro_id || null,
+    latitude: user.latitude || "",
+    longitude: user.longitude || "",
+    fotoPerfil: user.foto_perfil || null,
+  };
+}
+
 async function Login(req, res) {
   try {
     const { email, password } = req.body;
@@ -55,20 +69,10 @@ async function Login(req, res) {
         token,
 
         user: {
-          id: user.id,
-          nome: user.nome,
-          email: user.email,
-          tipo: user.tipo,
-
-          bairro: user.bairro || "",
-          rua: user.rua || "",
-
-          latitude: user.latitude || "",
-          longitude: user.longitude || "",
-
-          fotoPerfil: user.foto_perfil || null,
-
-          cpf: user.cpf,
+          data: {
+            token,
+            user: formatarUser(user),
+          },
         },
       },
     });
@@ -152,8 +156,44 @@ async function Cadastro(req, res) {
     });
   }
 }
+async function AtualizarPerfil(req, res) {
+  try {
+    const { nome, email, latitude, longitude } = req.body;
 
-module.exports = {
-  Login,
-  Cadastro,
-};
+    if (!nome || !email) {
+      return res.status(400).json({
+        message: "Error",
+        data: "Nome e e-mail são obrigatórios.",
+      });
+    }
+
+    const emailEmUso = await authModel.GetUSerbyEmail(email);
+    if (emailEmUso && emailEmUso.id !== req.usuario.id) {
+      return res.status(409).json({
+        message: "Error",
+        data: "Este e-mail já está em uso.",
+      });
+    }
+
+    await authModel.UpdateUser(req.usuario.id, {
+      nome,
+      email,
+      latitude,
+      longitude,
+    });
+    const atualizado = await authModel.GetUserById(req.usuario.id);
+
+    return res.status(200).json({
+      message: "Success",
+      data: { user: formatarUser(atualizado) },
+    });
+  } catch (error) {
+    console.error("Erro no AuthController (AtualizarPerfil):", error);
+    return res.status(500).json({
+      message: "Error",
+      data: "Erro interno no servidor.",
+    });
+  }
+}
+
+module.exports = { Login, Cadastro, AtualizarPerfil };

@@ -43,8 +43,22 @@ async function CreateUser({ nome, cpf, email, senhaHash, tipo }) {
   }
 }
 
+async function GetUserById(id) {
+  const [rows] = await db.execute("SELECT * FROM users WHERE id = ?", [id]);
+  return rows.length > 0 ? rows[0] : null;
+}
+
+async function UpdateUser(id, { nome, email, latitude, longitude }) {
+  const sql = `UPDATE users
+               SET nome = ?, email = ?, latitude = ?, longitude = ?
+               WHERE id = ?`;
+  await db.execute(sql, [nome, email, latitude || null, longitude || null, id]);
+}
+
 module.exports = {
   GetUSerbyEmail,
   GetUserbycpf,
   CreateUser,
+  GetUserById,
+  UpdateUser,
 };

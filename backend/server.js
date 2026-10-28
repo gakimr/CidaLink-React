@@ -3,6 +3,16 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 
 dotenv.config();
+console.log("JWT_SECRET carregado?", !!process.env.JWT_SECRET);
+
+const path = require("path");
+const result = require("dotenv").config({ path: path.join(__dirname, ".env") });
+
+if (result.error) {
+  console.error("Não consegui ler o .env:", result.error.message);
+} else {
+  console.log(".env carregado de:", path.join(__dirname, ".env"));
+}
 
 const authRoutes = require("./router/authRoutes.js");
 const { db } = require("./databases/databaseContext.js");
