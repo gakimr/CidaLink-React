@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useAuth } from "../../../context/AuthContext";
 import api from "../../../services/api";
+import { CompleteCadastro } from "../../../utils/Cadastro";
 import "./Perfil.css";
 
 const OCORRENCIAS_MOCK = [
@@ -45,7 +46,9 @@ function dadosIniciais(user) {
 export default function Perfil() {
   const { user, atualizarUser } = useAuth();
 
-  const [editando, setEditando] = useState(false);
+  const incompleto = !CompleteCadastro(user);
+
+  const [editando, setEditando] = useState(incompleto);
   const [dados, setDados] = useState(() => dadosIniciais(user));
   const [salvando, setSalvando] = useState(false);
   const [erro, setErro] = useState("");
@@ -91,6 +94,28 @@ export default function Perfil() {
     setOcorrencias((prev) => prev.filter((o) => o.id !== id));
   }
 
+  function usarMinhaLocalizacao() {
+    if (!navigator.geolocation) {
+      setErro("Seu navegador não suporta geolocalização.");
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        setDados((prev) => ({
+          ...prev,
+          latitude: String(pos.coords.latitude),
+          longitude: String(pos.coords.longitude),
+        }));
+        setErro("");
+      },
+      () =>
+        setErro(
+          "Não foi possível obter sua localização. Preencha manualmente.",
+        ),
+    );
+  }
+
   const pendentes = ocorrencias.filter((o) => o.status === "pendente").length;
   const andamento = ocorrencias.filter((o) => o.status === "andamento").length;
   const resolvidas = ocorrencias.filter((o) => o.status === "resolvida").length;
@@ -98,6 +123,16 @@ export default function Perfil() {
   return (
     <>
       <h1 className="app-titulo">Meu Perfil</h1>
+
+      {incompleto && (
+        <div className="perfil-aviso">
+          <strong>Conclua seu cadastro</strong>
+          <p>
+            Falta pouco! Informe sua localização para aproveitar tudo no
+            CidaLink.
+          </p>
+        </div>
+      )}
 
       <div className="perfil-page">
         <div className="perfil-card">
@@ -192,6 +227,16 @@ export default function Perfil() {
                 />
               </div>
             </div>
+
+            {editando && (
+              <button
+                type="button"
+                className="btn-localizacao"
+                onClick={usarMinhaLocalizacao}
+              >
+                📍 Usar minha localização
+              </button>
+            )}
           </div>
         </div>
 

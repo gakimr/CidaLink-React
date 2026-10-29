@@ -51,7 +51,11 @@ async function Login(req, res) {
     }
 
     const senhaValida = await bcrypt.compare(password, user.senha);
-
+    console.log("login recebido:", {
+      email: JSON.stringify(email),
+      senha: JSON.stringify(password),
+      achou: !!user,
+    });
     // Senha incorreta
     if (!senhaValida) {
       return res.status(401).json({
@@ -61,19 +65,11 @@ async function Login(req, res) {
     }
 
     const token = gerarToken(user);
-
     return res.status(200).json({
       message: "Success",
-
       data: {
         token,
-
-        user: {
-          data: {
-            token,
-            user: formatarUser(user),
-          },
-        },
+        user: formatarUser(user),
       },
     });
   } catch (error) {

@@ -286,3 +286,39 @@
 .perfil-msg-ok {
   color: var(--verde);
 }
+
+.perfil-aviso {
+  background: rgba(40, 170, 70, 0.12);
+  border: 1px solid var(--verde);
+  border-radius: 14px;
+  padding: 14px 18px;
+  margin-bottom: 20px;
+  color: var(--texto);
+}
+
+.perfil-aviso strong {
+  display: block;
+  margin-bottom: 2px;
+}
+
+.perfil-aviso p {
+  font-size: 0.88rem;
+  color: var(--texto-suave);
+}
+
+.btn-localizacao {
+  margin-top: 16px;
+  border: 1px solid var(--borda);
+  background: var(--bg-elevado);
+  color: var(--texto);
+  border-radius: 999px;
+  padding: 9px 18px;
+  font-family: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.btn-localizacao:hover {
+  background: var(--verdeclaro);
+  color: var(--verdeh);
+}

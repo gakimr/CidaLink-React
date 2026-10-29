@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import { CompleteCadastro } from "../../utils/Cadastro";
 import "./Login.css";
 
 function LoginCidadao() {
@@ -18,9 +19,10 @@ function LoginCidadao() {
     setCarregando(true);
 
     try {
-      await login(email, senha);
-      navigate("/app");
+      const dadosUser = await login(email, senha);
+      navigate(CompleteCadastro(dadosUser) ? "/app" : "/app/perfil");
     } catch (error) {
+      console.error("Erro no login:", error);
       setErro(error.response?.data?.data || "Erro ao entrar. Tente novamente.");
     } finally {
       setCarregando(false);
