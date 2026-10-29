@@ -114,7 +114,7 @@ const ICONES = {
 
 const ITENS_CIDADAO = [
   { id: "notificacoes", rotulo: "Notificações", rota: "/app/notificacoes" },
-  { id: "inicio", rotulo: "Página Inicial", rota: "/app/" }, /* <-- Adicione a barra aqui ou tire de ambos */
+  { id: "inicio", rotulo: "Página Inicial", rota: "/app" },
   { id: "criar", rotulo: "Criar Ocorrência", rota: "/app/criar-ocorrencia" },
   { id: "mapa", rotulo: "Mapa", rota: "/app/mapa" },
   { id: "chat", rotulo: "Bate-papo", rota: "/app/bate-papo" },
@@ -144,7 +144,7 @@ export default function Sidebar({ role = "cidadao" }) {
           <NavLink
             key={item.id}
             to={item.rota}
-            end={item.rota === "/app"}
+            end={item.id === "inicio"}
             className={({ isActive }) =>
               `sidebar-item ${isActive ? "sidebar-item-ativo" : ""}`
             }

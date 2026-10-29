@@ -1,37 +1,44 @@
-.conta-pagina {
+.chat-pagina {
+  display: flow-root;
   width: min(100%, 980px);
-  margin: 0 auto;
+  margin: 30px auto;
   color: var(--texto);
+  position: relative;
+  overflow: visible;
 }
 
-.conta-cabecalho,
-.conta-notificacao-topo,
-.conta-perfil-atalho,
-.conta-acoes-formulario {
+.chat-cabecalho {
   display: flex;
-  align-items: center;
+  position: relative;
+  inset: auto;
+  transform: none;
+  align-items: flex-start;
   justify-content: space-between;
   gap: 20px;
+  width: 100%;
+  min-height: 130px;
+  height: auto;
+  margin: 0 0 30px;
+  padding: 24px 30px;
+  box-sizing: border-box;
+  background: var(--verdeclaro);
+  z-index: 0;
 }
 
-.conta-cabecalho {
-  margin-bottom: 28px;
-}
-
-.conta-cabecalho h1 {
-  margin: 2px 0 4px;
+.chat-cabecalho h1 {
+  margin: 0 0 12px;
   color: var(--texto);
   font-size: 30px;
   font-weight: 700;
+  line-height: 1.2;
 }
 
-.conta-cabecalho p,
-.conta-perfil-destaque p,
-.conta-formulario-cabecalho p,
-.conta-perfil-atalho p {
+.chat-cabecalho p,
+.chat-painel-cabecalho p {
+  margin: 0;
   color: var(--texto-suave);
+  line-height: 1.5;
 }
-
 .conta-sobretitulo {
   color: var(--verdeh) !important;
   font-size: 13px;
@@ -71,6 +78,47 @@
   background: var(--bg);
 }
 
+.conta-notificacoes {
+  display: flow-root;
+  width: 100%;
+  max-width: 820px;
+  margin: 30px auto;
+  position: relative;
+  overflow: visible;
+  box-sizing: border-box;
+}
+
+.conta-cabecalho {
+  position: relative;
+  inset: auto;
+  transform: none;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  width: 100%;
+  min-height: 130px;
+  height: auto;
+  margin: 0 0 30px;
+  padding: 24px 30px;
+  box-sizing: border-box;
+  background: var(--verdeclaro);
+  z-index: 0;
+}
+
+.conta-cabecalho h1 {
+  margin: 0 0 12px;
+  color: var(--texto);
+  font-size: 1.8rem;
+  line-height: 1.2;
+}
+
+.conta-notificacoes-cabecalho p {
+  margin: 0;
+  color: var(--texto-suave);
+  line-height: 1.5;
+}
+
 .conta-notificacoes-resumo {
   display: flex;
   align-items: baseline;
@@ -93,17 +141,28 @@
   border: 1px solid var(--borda);
   border-radius: 6px;
   background: var(--bg-elevado);
+  box-sizing: border-box;
+}
+
+.conta-lista-notificacoes {
+  position: relative;
+  width: 100%;
+  margin: 0;
 }
 
 .conta-notificacao {
+  position: relative;
   display: flex;
+  align-items: flex-start;
   gap: 14px;
+  width: 100%;
   padding: 20px;
   border-bottom: 1px solid var(--borda);
+  box-sizing: border-box;
 }
 
 .conta-notificacao:last-child {
-  border-bottom: 0;
+  border-bottom: none;
 }
 
 .conta-notificacao-indicador {
