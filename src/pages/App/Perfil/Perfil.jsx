@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useAuth } from "../../../context/AuthContext";
 import api from "../../../services/api";
+import { CompleteCadastro } from "../../../utils/Cadastro";
 import "./Perfil.css";
 
 const OCORRENCIAS_MOCK = [
@@ -45,12 +46,21 @@ function dadosIniciais(user) {
 export default function Perfil() {
   const { user, atualizarUser } = useAuth();
 
-  const [editando, setEditando] = useState(false);
+  const incompleto = !CompleteCadastro(user);
+
+  const [editando, setEditando] = useState(incompleto);
   const [dados, setDados] = useState(() => dadosIniciais(user));
   const [salvando, setSalvando] = useState(false);
   const [erro, setErro] = useState("");
   const [sucesso, setSucesso] = useState("");
   const [ocorrencias, setOcorrencias] = useState(OCORRENCIAS_MOCK);
+
+  const inputFotoRef = useRef(null);
+  const [enviandoFoto, setEnviandoFoto] = useState(false);
+
+  const fotoUrl = user.fotoPerfil
+    ? `${api.defaults.baseURL}${user.fotoPerfil}`
+    : null;
 
   const iniciais = user.nome
     .split(" ")
@@ -91,6 +101,60 @@ export default function Perfil() {
     setOcorrencias((prev) => prev.filter((o) => o.id !== id));
   }
 
+  function usarMinhaLocalizacao() {
+    if (!navigator.geolocation) {
+      setErro("Seu navegador não suporta geolocalização.");
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        setDados((prev) => ({
+          ...prev,
+          latitude: String(pos.coords.latitude),
+          longitude: String(pos.coords.longitude),
+        }));
+        setErro("");
+      },
+      () =>
+        setErro(
+          "Não foi possível obter sua localização. Preencha manualmente.",
+        ),
+    );
+  }
+
+  async function handleFoto(e) {
+    const arquivo = e.target.files[0];
+    e.target.value = ""; // permite escolher o mesmo arquivo de novo
+    if (!arquivo) return;
+
+    if (!["image/jpeg", "image/png", "image/webp"].includes(arquivo.type)) {
+      setErro("Envie uma imagem JPG, PNG ou WEBP.");
+      return;
+    }
+    if (arquivo.size > 2 * 1024 * 1024) {
+      setErro("A imagem deve ter no máximo 2 MB.");
+      return;
+    }
+
+    setErro("");
+    setSucesso("");
+    setEnviandoFoto(true);
+
+    try {
+      const formData = new FormData();
+      formData.append("foto", arquivo);
+
+      const resposta = await api.put("/perfil/foto", formData);
+      atualizarUser(resposta.data.data.user);
+      setSucesso("Foto atualizada com sucesso.");
+    } catch (error) {
+      setErro(error.response?.data?.data || "Erro ao enviar a foto.");
+    } finally {
+      setEnviandoFoto(false);
+    }
+  }
+
   const pendentes = ocorrencias.filter((o) => o.status === "pendente").length;
   const andamento = ocorrencias.filter((o) => o.status === "andamento").length;
   const resolvidas = ocorrencias.filter((o) => o.status === "resolvida").length;
@@ -99,10 +163,48 @@ export default function Perfil() {
     <>
       <h1 className="app-titulo">Meu Perfil</h1>
 
+      {incompleto && (
+        <div className="perfil-aviso">
+          <strong>Conclua seu cadastro</strong>
+          <p>
+            Falta pouco! Informe sua localização para aproveitar tudo no
+            CidaLink.
+          </p>
+        </div>
+      )}
+
       <div className="perfil-page">
         <div className="perfil-card">
           <div className="perfil-avatar-bloco">
-            <div className="perfil-avatar">{iniciais}</div>
+            <button
+              type="button"
+              className="perfil-avatar-botao"
+              onClick={() => inputFotoRef.current.click()}
+              disabled={enviandoFoto}
+              title="Alterar foto"
+            >
+              {fotoUrl ? (
+                <img
+                  src={fotoUrl}
+                  alt="Foto de perfil"
+                  className="perfil-avatar-img"
+                />
+              ) : (
+                <div className="perfil-avatar">{iniciais}</div>
+              )}
+              <span className="perfil-avatar-editar">
+                {enviandoFoto ? "Enviando..." : "Alterar foto"}
+              </span>
+            </button>
+
+            <input
+              ref={inputFotoRef}
+              type="file"
+              accept="image/jpeg,image/png,image/webp"
+              hidden
+              onChange={handleFoto}
+            />
+
             <h2>{user.nome}</h2>
             <span className="perfil-badge">
               {user.tipo === "admin" ? "Administrador" : "Cidadão Ativo"}
@@ -192,6 +294,16 @@ export default function Perfil() {
                 />
               </div>
             </div>
+
+            {editando && (
+              <button
+                type="button"
+                className="btn-localizacao"
+                onClick={usarMinhaLocalizacao}
+              >
+                📍 Usar minha localização
+              </button>
+            )}
           </div>
         </div>
 
