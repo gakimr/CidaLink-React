@@ -1,5 +1,8 @@
+import { Link } from "react-router-dom";
+
 import logoCidalink from "../../assets/LogoCida.svg";
-import logoCidalinkEscuro from '../../assets/LogoCidaDM.svg'
+import logoCidalinkEscuro from "../../assets/LogoCidaDM.svg";
+
 import "./PreFooter.css";
 
 export default function PreFooter() {
@@ -12,28 +15,31 @@ export default function PreFooter() {
             alt="CidaLink"
             className="footer-logo logo-claro"
           />
+
           <img
             src={logoCidalinkEscuro}
             alt="CidaLink"
             className="footer-logo logo-escuro"
           />
+
           <p>Conectando cidadãos e gestão para transformar a cidade.</p>
-          <a href="#" className="btn btn-primario">
-            Começe a usar!
-          </a>
+
+          <Link to="/cadastro/cidadao" className="btn btn-primario">
+            Comece a usar!
+          </Link>
         </div>
 
         <div className="footer-coluna">
           <h4>Institucional</h4>
           <ul>
             <li>
-              <a href="#">Quem somos</a>
+              <Link to="/institucional">Quem somos</Link>
             </li>
             <li>
-              <a href="#">Nossa missão</a>
+              <Link to="/institucional">Nossa missão</Link>
             </li>
             <li>
-              <a href="#">Nosso Projeto</a>
+              <Link to="/institucional">Nosso Projeto</Link>
             </li>
           </ul>
         </div>
@@ -42,13 +48,13 @@ export default function PreFooter() {
           <h4>Plataforma</h4>
           <ul>
             <li>
-              <a href="#">Mapa Interativo</a>
+              <Link to="/plataforma">Mapa Interativo</Link>
             </li>
             <li>
-              <a href="#">Relatos/Ocorrências</a>
+              <Link to="/plataforma">Relatos/Ocorrências</Link>
             </li>
             <li>
-              <a href="#">Administrador</a>
+              <Link to="/plataforma">Administrador</Link>
             </li>
           </ul>
         </div>
@@ -57,13 +63,13 @@ export default function PreFooter() {
           <h4>Suporte & Legal</h4>
           <ul>
             <li>
-              <a href="#">Central de Ajuda</a>
+              <Link to="/suporte">Central de Ajuda</Link>
             </li>
             <li>
-              <a href="#">Termos de uso</a>
+              <Link to="/termos-de-uso">Termos de uso</Link>
             </li>
             <li>
-              <a href="#">Política de Privacidade</a>
+              <Link to="/politica-de-privacidade">Política de Privacidade</Link>
             </li>
           </ul>
         </div>
