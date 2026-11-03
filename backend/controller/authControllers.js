@@ -1,5 +1,8 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const fs = require("fs");
+const path = require("path");
+const pastaUploads = require("../utils/upload.js");
 
 const authModel = require("../model/authmodel.js");
 
@@ -51,12 +54,7 @@ async function Login(req, res) {
     }
 
     const senhaValida = await bcrypt.compare(password, user.senha);
-    console.log("login recebido:", {
-      email: JSON.stringify(email),
-      senha: JSON.stringify(password),
-      achou: !!user,
-    });
-    // Senha incorreta
+
     if (!senhaValida) {
       return res.status(401).json({
         message: "Error",
@@ -192,4 +190,38 @@ async function AtualizarPerfil(req, res) {
   }
 }
 
-module.exports = { Login, Cadastro, AtualizarPerfil };
+async function AtualizarFoto(req, res) {
+  try {
+    if (!req.file) {
+      return res.status(400).json({
+        message: "Error",
+        data: "Nenhuma foto enviada",
+      });
+    }
+
+    const atual = await authModel.GetUserById(req.usuario.id);
+    const newPath = `/uploads/${req.file.filename}`;
+
+    await authModel.UpdateFotoPerfil(req.usuario.id, newPath);
+
+    if (atual?.foto_perfil) {
+      const antiga = path.join(pastaUploads, path.basename(atual.foto_perfil));
+      fs.unlink(antiga, () => {});
+    }
+
+    const atualizado = await authModel.GetUserById(req.usuario.id);
+
+    return res.status(200).json({
+      message: "Sucess",
+      data: { user: formatarUser(atualizado) },
+    });
+  } catch (error) {
+    console.error("Erro no AuthController (AtualizarFoto):", error);
+    return res.status(500).json({
+      message: "Error",
+      data: "Erro interno no servidor.",
+    });
+  }
+}
+
+module.exports = { Login, Cadastro, AtualizarPerfil, AtualizarFoto };

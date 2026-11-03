@@ -55,10 +55,18 @@ async function UpdateUser(id, { nome, email, latitude, longitude }) {
   await db.execute(sql, [nome, email, latitude || null, longitude || null, id]);
 }
 
+async function UpdateFotoPerfil(id, path) {
+  await db.execute("UPDATE users SET foto_perfil = ? WHERE id = ? ", [
+    path,
+    id,
+  ]);
+}
+
 module.exports = {
   GetUSerbyEmail,
   GetUserbycpf,
   CreateUser,
   GetUserById,
   UpdateUser,
+  UpdateFotoPerfil,
 };

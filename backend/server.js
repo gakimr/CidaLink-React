@@ -2,6 +2,8 @@ const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
 
+const { pastaUploads } = require("./utils/upload.js");
+
 dotenv.config();
 console.log("JWT_SECRET carregado?", !!process.env.JWT_SECRET);
 
@@ -21,7 +23,7 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-
+app.use("/uploads", express.static(pastaUploads));
 app.use(authRoutes);
 
 const Port = process.env.PORT || 3000;
