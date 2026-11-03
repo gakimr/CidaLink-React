@@ -12,6 +12,7 @@ import Feed from "./pages/App/Feed/Feed";
 import CriarOcorrencia from "./pages/App/CriarOcorrencia/CriarOcorrencia";
 import Perfil from "./pages/App/Perfil/Perfil";
 import RotaProtegida from "./routes/RotaProtegida";
+import Institucional from "./pages/Institucional/Institucional";
 import "./App.css";
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
         <Route path="/loginadm" element={<LoginAdmin />} />
         <Route path="/cadastro/cidadao" element={<CadastroCidadao />} />
         <Route path="/cadastro/administrador" element={<CadastroAdmin />} />
+        <Route path="/institucional" element={<Institucional />} />
       </Route>
 
       <Route
