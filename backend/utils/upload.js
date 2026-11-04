@@ -28,4 +28,19 @@ const upload = multer({
   },
 });
 
-module.exports = { upload, pastaUploads };
+function receberImagem(campo) {
+  return (req, res, next) => {
+    upload.single(campo)(req, res, (err) => {
+      if (err) {
+        const mensagem =
+          err.code === "LIMIT_FILE_SIZE"
+            ? "A imagem deve ter no máximo 2 MB."
+            : "Envie uma imagem JPG, PNG ou WEBP.";
+        return res.status(400).json({ message: "Error", data: mensagem });
+      }
+      next();
+    });
+  };
+}
+
+module.exports = { upload, pastaUploads, receberImagem };

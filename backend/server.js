@@ -9,6 +9,8 @@ console.log("JWT_SECRET carregado?", !!process.env.JWT_SECRET);
 
 const path = require("path");
 const result = require("dotenv").config({ path: path.join(__dirname, ".env") });
+const postsRoutes = require("./router/postsRoutes.js");
+const bairrosRoutes = require("./router/bairrosRoutes.js");
 
 if (result.error) {
   console.error("Não consegui ler o .env:", result.error.message);
@@ -25,6 +27,8 @@ app.use(cors());
 app.use(express.json());
 app.use("/uploads", express.static(pastaUploads));
 app.use(authRoutes);
+app.use(postsRoutes);
+app.use(bairrosRoutes);
 
 const Port = process.env.PORT || 3000;
 

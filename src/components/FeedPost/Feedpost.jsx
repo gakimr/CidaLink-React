@@ -14,7 +14,7 @@ export default function FeedPost({ post }) {
   function alternarCurtida() {
     setCurtido((estadoAtual) => {
       setVotos((quantidadeAtual) =>
-        estadoAtual ? quantidadeAtual - 1 : quantidadeAtual + 1
+        estadoAtual ? quantidadeAtual - 1 : quantidadeAtual + 1,
       );
 
       return !estadoAtual;
@@ -39,7 +39,10 @@ export default function FeedPost({ post }) {
           {STATUS_LABEL[post.status]}
         </span>
       </header>
-
+      <div className="feed-corpo">
+        <span className="feed-categoria">{post.categoria}</span>
+        <p className="feed-descricao">{post.descricao}</p>
+      </div>
       {post.imagem && (
         <img
           src={post.imagem}
@@ -48,62 +51,58 @@ export default function FeedPost({ post }) {
         />
       )}
       <div className="feed-acoes">
-          <button
-            type="button"
-            className={`feed-acao-btn ${curtido ? "feed-curtido" : ""}`}
-            onClick={alternarCurtida}
-            aria-label={curtido ? "Remover apoio" : "Apoiar ocorrência"}
+        <button
+          type="button"
+          className={`feed-acao-btn ${curtido ? "feed-curtido" : ""}`}
+          onClick={alternarCurtida}
+          aria-label={curtido ? "Remover apoio" : "Apoiar ocorrência"}
+        >
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill={curtido ? "currentColor" : "none"}
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           >
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill={curtido ? "currentColor" : "none"}
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M7 10v12" />
-              <path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a3.13 3.13 0 0 1 3 3.88Z" />
-            </svg>
-          </button>
+            <path d="M7 10v12" />
+            <path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a3.13 3.13 0 0 1 3 3.88Z" />
+          </svg>
+        </button>
 
-          <button
-            type="button"
-            className="feed-acao-btn"
-            aria-label="Comentar"
+        <button type="button" className="feed-acao-btn" aria-label="Comentar">
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
           >
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z" />
-            </svg>
-          </button>
+            <path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z" />
+          </svg>
+        </button>
 
-          <button
-            type="button"
-            className="feed-acao-btn"
-            aria-label="Compartilhar"
+        <button
+          type="button"
+          className="feed-acao-btn"
+          aria-label="Compartilhar"
+        >
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
           >
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <line x1="22" y1="2" x2="11" y2="13" />
-              <polygon points="22 2 15 22 11 13 2 9 22 2" />
-            </svg>
-          </button>
-        </div>
+            <line x1="22" y1="2" x2="11" y2="13" />
+            <polygon points="22 2 15 22 11 13 2 9 22 2" />
+          </svg>
+        </button>
+      </div>
     </article>
   );
 }

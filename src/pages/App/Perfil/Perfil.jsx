@@ -1,32 +1,16 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useAuth } from "../../../context/AuthContext";
 import api from "../../../services/api";
 import { CompleteCadastro } from "../../../utils/Cadastro";
 import "./Perfil.css";
 
-const OCORRENCIAS_MOCK = [
-  {
-    id: 1,
-    categoria: "Buraco na Rua",
-    endereco: "Rua Sete de Setembro, 120",
-    status: "pendente",
-    data: "12/09/2026",
-  },
-  {
-    id: 2,
-    categoria: "Iluminação Pública",
-    endereco: "Av. João Perissinoti, 45",
-    status: "andamento",
-    data: "05/09/2026",
-  },
-  {
-    id: 3,
-    categoria: "Acúmulo de Lixo",
-    endereco: "Rua Prudente de Morais, 88",
-    status: "resolvida",
-    data: "28/08/2026",
-  },
-];
+const CATEGORIA_LABEL = {
+  buraco: "Buraco na Rua",
+  iluminacao: "Iluminação Pública",
+  lixo: "Acúmulo de Lixo",
+  saneamento: "Problemas de Saneamento",
+  outro: "Outro",
+};
 
 const STATUS_LABEL = {
   pendente: "Pendente",
@@ -53,7 +37,9 @@ export default function Perfil() {
   const [salvando, setSalvando] = useState(false);
   const [erro, setErro] = useState("");
   const [sucesso, setSucesso] = useState("");
-  const [ocorrencias, setOcorrencias] = useState(OCORRENCIAS_MOCK);
+  const [ocorrencias, setOcorrencias] = useState([]);
+  const [carregandoLista, setCarregandoLista] = useState(true);
+  const [erroLista, setErroLista] = useState("");
 
   const inputFotoRef = useRef(null);
   const [enviandoFoto, setEnviandoFoto] = useState(false);
@@ -96,9 +82,25 @@ export default function Perfil() {
     }
   }
 
-  function handleExcluir(id) {
-    // TODO: chamar a API quando as postagens existirem no backend
-    setOcorrencias((prev) => prev.filter((o) => o.id !== id));
+  async function handleExcluir(id) {
+    if (
+      !window.confirm(
+        "Excluir esta ocorrência? Essa ação não pode ser desfeita.",
+      )
+    ) {
+      return;
+    }
+
+    setErroLista("");
+    try {
+      await api.delete(`/postagens/${id}`);
+      setOcorrencias((prev) => prev.filter((o) => o.id !== id));
+    } catch (error) {
+      setErroLista(
+        error.response?.data?.data ||
+          "Não foi possível excluir. Tente novamente.",
+      );
+    }
   }
 
   function usarMinhaLocalizacao() {
@@ -125,7 +127,7 @@ export default function Perfil() {
 
   async function handleFoto(e) {
     const arquivo = e.target.files[0];
-    e.target.value = ""; // permite escolher o mesmo arquivo de novo
+    e.target.value = "";
     if (!arquivo) return;
 
     if (!["image/jpeg", "image/png", "image/webp"].includes(arquivo.type)) {
@@ -158,6 +160,31 @@ export default function Perfil() {
   const pendentes = ocorrencias.filter((o) => o.status === "pendente").length;
   const andamento = ocorrencias.filter((o) => o.status === "andamento").length;
   const resolvidas = ocorrencias.filter((o) => o.status === "resolvida").length;
+
+  useEffect(() => {
+    let cancelado = false;
+
+    api
+      .get("/postagens/minhas")
+      .then((resposta) => {
+        if (!cancelado) setOcorrencias(resposta.data.data.postagens);
+      })
+      .catch((error) => {
+        if (!cancelado) {
+          setErroLista(
+            error.response?.data?.data ||
+              "Não foi possível carregar suas ocorrências.",
+          );
+        }
+      })
+      .finally(() => {
+        if (!cancelado) setCarregandoLista(false);
+      });
+
+    return () => {
+      cancelado = true;
+    };
+  }, []);
 
   return (
     <>
@@ -328,7 +355,13 @@ export default function Perfil() {
         <div className="lista-card">
           <h3>Minhas Ocorrências Reportadas</h3>
 
-          {ocorrencias.length === 0 && (
+          {carregandoLista && <p className="lista-vazia">Carregando...</p>}
+
+          {erroLista && (
+            <p className="perfil-msg perfil-msg-erro">{erroLista}</p>
+          )}
+
+          {!carregandoLista && !erroLista && ocorrencias.length === 0 && (
             <p className="lista-vazia">
               Você ainda não reportou nenhuma ocorrência.
             </p>
@@ -340,8 +373,12 @@ export default function Perfil() {
                 <div className="lista-item-info">
                   <span className={`status-ponto status-${o.status}`}></span>
                   <div>
-                    <strong>{o.categoria}</strong>
-                    <p>{o.endereco}</p>
+                    <strong>
+                      {CATEGORIA_LABEL[o.categoria] || o.categoria}
+                    </strong>
+                    <p>
+                      {[o.logradouro, o.bairro].filter(Boolean).join(" - ")}
+                    </p>
                   </div>
                 </div>
 
@@ -349,25 +386,18 @@ export default function Perfil() {
                   <span className={`status-tag status-tag-${o.status}`}>
                     {STATUS_LABEL[o.status]}
                   </span>
-                  <span className="lista-item-data">{o.data}</span>
+                  <span className="lista-item-data">
+                    {new Date(o.criadoEm).toLocaleDateString("pt-BR")}
+                  </span>
                   {o.status === "pendente" && (
-                    <>
-                      <button
-                        type="button"
-                        className="btn-icone"
-                        title="Editar"
-                      >
-                        ✎
-                      </button>
-                      <button
-                        type="button"
-                        className="btn-icone btn-icone-excluir"
-                        title="Excluir"
-                        onClick={() => handleExcluir(o.id)}
-                      >
-                        ✕
-                      </button>
-                    </>
+                    <button
+                      type="button"
+                      className="btn-icone btn-icone-excluir"
+                      title="Excluir"
+                      onClick={() => handleExcluir(o.id)}
+                    >
+                      ✕
+                    </button>
                   )}
                 </div>
               </li>
