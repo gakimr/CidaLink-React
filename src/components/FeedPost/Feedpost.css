@@ -139,6 +139,23 @@
   text-decoration: underline;
 }
 
+.feed-admin-btn {
+  margin-left: auto;
+  border: none;
+  background: var(--azul);
+  color: var(--cinzabranco);
+  border-radius: 999px;
+  padding: 8px 16px;
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.feed-admin-btn:hover {
+  background: var(--azulc);
+}
+
 @media (max-width: 700px) {
   .feed-post {
     border-right: none;

@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 import "./Feedpost.css";
 
 const STATUS_LABEL = {
@@ -10,6 +12,9 @@ const STATUS_LABEL = {
 export default function FeedPost({ post }) {
   const [curtido, setCurtido] = useState(false);
   const [votos, setVotos] = useState(post.votos);
+  const navigate = useNavigate();
+  const { user } = useAuth();
+  const ehAdmin = user?.tipo === "admin";
 
   function alternarCurtida() {
     setCurtido((estadoAtual) => {
@@ -102,6 +107,16 @@ export default function FeedPost({ post }) {
             <polygon points="22 2 15 22 11 13 2 9 22 2" />
           </svg>
         </button>
+
+        {ehAdmin && (
+          <button
+            type="button"
+            className="feed-admin-btn"
+            onClick={() => navigate(`/app/ocorrencia/${post.id}`)}
+          >
+            Responder / Atualizar
+          </button>
+        )}
       </div>
     </article>
   );
