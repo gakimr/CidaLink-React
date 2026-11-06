@@ -128,8 +128,14 @@ const ITENS_MENU = [
 ];
 
 export default function Sidebar() {
-  const { logout } = useAuth();
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
+
+  // administrador não cria ocorrências, só responde às dos cidadãos
+  const itens =
+    user?.tipo === "admin"
+      ? ITENS_MENU.filter((item) => item.id !== "criar")
+      : ITENS_MENU;
 
   function handleSair() {
     navigate("/");
@@ -144,7 +150,7 @@ export default function Sidebar() {
       </NavLink>
 
       <nav className="sidebar-nav">
-        {ITENS_MENU.map((item) => (
+        {itens.map((item) => (
           <NavLink
             key={item.id}
             to={item.rota}

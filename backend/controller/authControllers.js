@@ -82,7 +82,7 @@ async function Login(req, res) {
 
 async function Cadastro(req, res) {
   try {
-    const { nome, cpf, email, password, tipo } = req.body;
+    const { nome, cpf, email, password, tipo, codigoAdmin } = req.body;
 
     if (!nome || !cpf || !email || !password) {
       return res.status(400).json({
@@ -91,7 +91,19 @@ async function Cadastro(req, res) {
       });
     }
 
-    const tipoFinal = tipo === "admin" ? "admin" : "cidadao";
+    const querAdmin = tipo === "admin";
+
+    if (
+      querAdmin &&
+      (!process.env.ADMIN_CODE || codigoAdmin !== process.env.ADMIN_CODE)
+    ) {
+      return res.status(403).json({
+        message: "Error",
+        data: "Código de administrador inválido.",
+      });
+    }
+
+    const tipoFinal = querAdmin ? "admin" : "cidadao";
 
     const emailExistente = await authModel.GetUSerbyEmail(email);
 

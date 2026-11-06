@@ -11,6 +11,7 @@ function CadastroAdmin() {
   const [confirmarSenha, setConfirmarSenha] = useState("");
   const [erro, setErro] = useState("");
   const [carregando, setCarregando] = useState(false);
+  const [codigoAdmin, setCodigoAdmin] = useState("");
 
   const { cadastrar } = useAuth();
   const navigate = useNavigate();
@@ -26,7 +27,14 @@ function CadastroAdmin() {
 
     setCarregando(true);
     try {
-      await cadastrar({ nome, cpf, email, password: senha, tipo: "admin" });
+      await cadastrar({
+        nome,
+        cpf,
+        email,
+        password: senha,
+        tipo: "admin",
+        codigoAdmin,
+      });
       navigate("/app");
     } catch (error) {
       setErro(
@@ -97,6 +105,17 @@ function CadastroAdmin() {
             required
             value={confirmarSenha}
             onChange={(e) => setConfirmarSenha(e.target.value)}
+          />
+        </div>
+
+        <div className="inputgp">
+          <label htmlFor="codigoAdmin">Código de administrador</label>
+          <input
+            id="codigoAdmin"
+            type="password"
+            required
+            value={codigoAdmin}
+            onChange={(e) => setCodigoAdmin(e.target.value)}
           />
         </div>
 
